@@ -14,7 +14,6 @@ function App() {
   const [board, setBoard] = useState(Array(9).fill(null))
   const [turn, setTurn] = useState(TURNS.X)
 
-  
   return (
     <main className='board'>
             <section className='game'>
