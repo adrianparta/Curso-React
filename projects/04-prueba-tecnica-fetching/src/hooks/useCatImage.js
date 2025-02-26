@@ -1,9 +1,11 @@
+import { useState, useEffect } from 'react'
+import { URL_IMAGE_CAT } from '../constants'
 
-
-export const useCatImage = (fact) => {
+export const useCatImage = ({ fact }) => {
+    const [imgURL, setImgURL] = useState()
+    
     useEffect(() => {
         if(!fact) return
-        
         const firstWorld = fact.split(' ').slice(0, 1)
         fetch(`${URL_IMAGE_CAT}says/${firstWorld}?json=true`)
         .then(res => res.json())
@@ -12,6 +14,6 @@ export const useCatImage = (fact) => {
             setImgURL(url)
         })
     }, [fact])
-    
-    return imgURL
+
+    return { imgURL }
 }
