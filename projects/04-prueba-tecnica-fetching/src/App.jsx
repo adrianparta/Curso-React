@@ -11,6 +11,7 @@ export function App() {
         refreshFact()
     }
     
+    
     return (
         <main>
             <h1>App Gatos</h1>
