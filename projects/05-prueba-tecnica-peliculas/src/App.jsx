@@ -1,10 +1,10 @@
-import { useState } from 'react';
 import './App.css'
 import { useMovies } from './hooks/useMovies';
 import { Movies } from './components/Movies';
+import { useSearch } from './hooks/useSearch';
 
 function App() {
-  const [search, setSearch] = useState('');
+  const [ search, updateSearch ] = useSearch();
   const [ movies, getMovies ] = useMovies(search);
   
   const handleSubmit = (event) => {
@@ -13,7 +13,7 @@ function App() {
   }
 
   const handleChange = (event) => {
-    setSearch(event.target.value);
+    updateSearch(event.target.value);
   }
 
   return (
