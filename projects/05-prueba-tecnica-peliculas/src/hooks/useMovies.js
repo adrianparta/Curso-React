@@ -1,24 +1,30 @@
-import { useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 
-export const useMovies = () => {
+export const useMovies = (search, sort) => {
     const [movies, setMovies] = useState([]);
     const previusSearch = useRef('')
 
-    const getMovies = (search) => {
-        if(previusSearch.current === search) return
-        previusSearch.current = search
-        if(search === '') return
-        fetch(`https://www.omdbapi.com/?apikey=4287ad07&s=${search}`)
-        .then(res => res.json())
-        .then(data => {
-            if(data.Response === 'False') {
-                setMovies([])
-                return 
-            }
-            const movies = data.Search
-            setMovies(movies)
-        })
-    }
+    const getMovies = useCallback(async (search) => {
+            if(previusSearch.current === search) return
+            previusSearch.current = search
+            if(search === '') return
+            fetch(`https://www.omdbapi.com/?apikey=4287ad07&s=${search}`)
+            .then(res => res.json())
+            .then(data => {
+                if(data.Response === 'False') {
+                    setMovies([])
+                    return 
+                }
+                const movies = data.Search
+                setMovies(movies)
+            })
+    }, [])
 
-    return ([ movies, getMovies ])
+    const sortedMovies = useMemo(() => {
+        return sort 
+        ? [...movies].sort((a, b) => a.Title.localeCompare(b.Title)) 
+        : movies
+    }, [movies, sort])
+
+    return ({ movies: sortedMovies, getMovies })
 }

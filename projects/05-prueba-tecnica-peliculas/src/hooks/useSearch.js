@@ -7,5 +7,5 @@ export function useSearch() {
         setSearch(search)
     }
     
-    return ([ search, updateSearch ])
+    return ({ search, updateSearch })
 }
