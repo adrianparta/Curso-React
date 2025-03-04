@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "description": "",
-  "devDependencies": {
+  "dependencies": {
+    "just-debounce-it": "3.2.0"
   }
 }
