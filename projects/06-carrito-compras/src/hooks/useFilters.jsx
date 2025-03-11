@@ -1,15 +1,24 @@
-import { useState } from "react"
+import { useContext, useEffect, useState } from "react"
+import products from '../products.json'
+import { FiltersContext } from "../contexts/filters"
 
 export const useFilters = () => {
-    const [minPrice, setMinPrice] = useState(0)
-    const [category, setCategory] = useState('')
+    const { filters, setFilters } = useContext(FiltersContext) 
+    const [filteredProducts, setFilteredProducts] = useState(products)
+    
+    useEffect(() => {
+    const newFilteredProducts = [...products].filter(product => {
+        return (
+        product.price >= filters.minPrice &&
+        (filters.category === '' || product.category === filters.category)
+        )
+    })
 
-    console.log(minPrice, category);
+    setFilteredProducts(newFilteredProducts)
+
+    }, [filters])
     
     return {
-        minPrice,
-        setMinPrice,
-        category,
-        setCategory
+        filters, setFilters, filteredProducts
     }
 }
