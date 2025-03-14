@@ -1,31 +1,41 @@
+import { useCart } from '../hooks/useCart'
 import './Cart.css'
 import { useId } from "react"
 
 export const Cart = () => {
     const cartCheckboxId = useId()
+    const { cart, clearCart, addToCart } = useCart()
 
+    function handleClick () {
+        clearCart()
+    }
+    
     return (
         <>
             <label className="cart-button" htmlFor={cartCheckboxId}>🛒</label>
-            <input type="checkbox" id={cartCheckboxId} />
-
+            <input type="checkbox" id={cartCheckboxId} hidden/>
             <aside className="cart">
                 <ul>
-                    <li>
-                        <img src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg" alt="Iphone" />
-                        <div>
-                            <strong>Iphone</strong>
-                            <strong>$1500</strong>
-                        </div>
-
-                        <footer>
-                            <small>Qty: 1</small>
-                            <button>+</button>
-                        </footer>
-                    </li>
+                    {                        
+                        cart.map(product => {
+                            return(
+                                <li key={product.id}>
+                                    <img src={product.image} alt={product.title} />
+                                    <div>
+                                        <strong>{product.title}</strong>
+                                        <strong>${product.price}</strong>
+                                    </div>
+                                    <footer>
+                                        <small>Qty: {product.qty}</small>
+                                        <button onClick={() => addToCart(product)}>+</button>
+                                    </footer>
+                                </li>
+                            )
+                        })
+                    }
                 </ul>
 
-                <button>🧺</button>
+                <button onClick={handleClick}>🧺</button>
             </aside>    
         </>
     )
