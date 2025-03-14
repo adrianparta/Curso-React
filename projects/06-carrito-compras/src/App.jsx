@@ -2,6 +2,7 @@ import './App.css'
 import { Product } from './components/Product'
 import { Filters } from './components/Filters'
 import { useFilters } from './hooks/useFilters'
+import { Cart } from './components/Cart'
 
 function App() {
   const { filteredProducts } = useFilters()
@@ -12,6 +13,7 @@ function App() {
         <h1>Carrito de compras</h1>
         <Filters />
       </header>
+      <Cart />
       <main>
         <ul className='products'>
           {

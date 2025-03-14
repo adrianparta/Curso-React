@@ -1,3 +1,4 @@
+import './Cart.css'
 import { useId } from "react"
 
 export const Cart = () => {
@@ -5,7 +6,7 @@ export const Cart = () => {
 
     return (
         <>
-            <label className="cart-button" htmlFor={cartCheckboxId}></label>
+            <label className="cart-button" htmlFor={cartCheckboxId}>🛒</label>
             <input type="checkbox" id={cartCheckboxId} />
 
             <aside className="cart">
@@ -24,7 +25,7 @@ export const Cart = () => {
                     </li>
                 </ul>
 
-                <button>Clear cart</button>
+                <button>🧺</button>
             </aside>    
         </>
     )
