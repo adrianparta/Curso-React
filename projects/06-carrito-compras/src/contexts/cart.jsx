@@ -1,10 +1,25 @@
-import { createContext } from "react";
+import { createContext, useState } from "react";
 
-export const cartContext = createContext()
+// eslint-disable-next-line react-refresh/only-export-components
+export const CartContext = createContext()
 
-export const carProvider = ({ children }) => {
+export const CartProvider = ({ children }) => {
+    const [cart, setCart] = useState([])
+
+    const addToCart = (product) => {
+        const productIndex = cart.findIndex(item => item.id === product.id)  
+        if (productIndex === -1) {
+            setCart(prevState => [...prevState, { ...product, qty: 1 }])
+        } else {
+            const newCart = structuredClone(cart)
+            newCart[productIndex] = ({ ...newCart[productIndex], qty: newCart[productIndex].qty + 1
+            })
+            setCart(newCart)
+        }          
+    }
+
     return (
-        <cartContext.Provider>
+        <cartContext.Provider value={{ cart, setCart, addToCart}}>
             {children}
         </cartContext.Provider>
     )
