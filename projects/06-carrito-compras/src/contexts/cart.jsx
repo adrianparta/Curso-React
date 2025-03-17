@@ -1,32 +1,28 @@
-import { createContext, useState } from "react";
-
+import { createContext, useReducer } from "react";
+import { cartReducer, initialState } from "../reducers/cartReducer";
 // eslint-disable-next-line react-refresh/only-export-components
 export const CartContext = createContext()
 
 export const CartProvider = ({ children }) => {
-    const [cart, setCart] = useState([])
+    const [state, dispatch] = useReducer(cartReducer, initialState)
 
-    const addToCart = product => {
-        const productIndex = cart.findIndex(item => item.id === product.id)  
-        if (productIndex === -1) {
-            setCart(prevState => [...prevState, { ...product, qty: 1 }])
-        } else {         
-            const newCart = structuredClone(cart)
-            newCart[productIndex].qty += 1
-            setCart(newCart)
-        }
-    }
+    
+    const addToCart = product => dispatch({
+        type: 'ADD_TO_CART',
+        payload: product
+    })
 
-    const removeFromCart = (product) => {
-        setCart(prevState => prevState.filter(item => item.id !== product.id))
-    }
+    const removeFromCart = product => dispatch({
+        type: 'REMOVE_FROM_CART',
+        payload: product
+    })
 
-    const clearCart = () => {
-        setCart([])
-    }
+    const clearCart = () => dispatch({
+        type: 'CLEAR_CART'
+    })
 
     return (
-        <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart }}>
+        <CartContext.Provider value={{ cart: state, addToCart, removeFromCart, clearCart }}>
             {children}
         </CartContext.Provider>
     )
